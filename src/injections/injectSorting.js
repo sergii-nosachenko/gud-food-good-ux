@@ -12,7 +12,7 @@ function sortRows(tabPane, by, order) {
   });
 
   const rowsSorted = rows.toArray();
-  const $parent = rows.index(0).parent();
+  const $parent = $(rows[0]).parent();
 
   if (!order) {
     rowsSorted.sort((a, b) => (
