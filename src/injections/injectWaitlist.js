@@ -55,9 +55,11 @@ class Waitlist {
     || [];
 
     this.$waitlist = Waitlist.addWaitlistPanel();
-    this.$total = this.$waitlist?.find('#waitlist-total');
+    this.$total = this.$waitlist.find('#waitlist-total');
 
-    this.products.forEach(this.addWaitListItem);
+    this.products.forEach((product) => {
+      this.addWaitListItem(product);
+    });
   }
 
   addProduct(product) {
