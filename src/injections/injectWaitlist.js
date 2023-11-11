@@ -182,6 +182,9 @@ class Waitlist {
   changeTotal() {
     const total = this.getTotal();
 
+    console.log('changeTotal', total);
+    console.log(this.$total);
+
     this.$total?.text(total);
   }
 }
@@ -195,8 +198,6 @@ function injectWaitlist() {
     return;
   }
 
-  // localStorage.setItem('waitlistedProducts', JSON.stringify([]));
-
   products.each(function () {
     const product = $(this);
     const title = product.find('.media-heading').text();
@@ -208,7 +209,7 @@ function injectWaitlist() {
     const waitlistButton = $('<button>')
       .addClass('btn btn-warning')
       .html('<span class="glyphicon glyphicon-copy"></span>')
-      .attr('title', 'Add to shortlist')
+      .attr('title', 'Add to waitlist')
       .css('margin-left', '5px')
       .on('click', () => {
         WAIT_LIST.addProduct({
