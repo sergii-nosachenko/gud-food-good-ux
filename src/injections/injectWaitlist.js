@@ -118,7 +118,7 @@ class Waitlist {
         <td>${product.title}</td>
         <td class="quantity">
           <span class="glyphicon glyphicon-minus minus"></span>
-            ${product.quantity}
+          <span class="value">${product.quantity}</span>
           <span class="glyphicon glyphicon-plus plus"></span>
         </td>
         <td>${product.price}</td>
@@ -148,7 +148,7 @@ class Waitlist {
       if (currentProduct.quantity > 1) {
         currentProduct.quantity -= 1;
 
-        listItem.find('.quantity').text(currentProduct.quantity);
+        listItem.find('.quantity .value').text(currentProduct.quantity);
       } else {
         this.removeProduct(product.pid);
 
@@ -163,7 +163,7 @@ class Waitlist {
 
       currentProduct.quantity += 1;
 
-      listItem.find('.quantity').text(currentProduct.quantity);
+      listItem.find('.quantity .value').text(currentProduct.quantity);
 
       this.changeTotal();
 
