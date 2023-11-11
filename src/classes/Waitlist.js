@@ -20,6 +20,10 @@ class Waitlist {
     this.$waitlist = this.addWaitlistPanel();
     this.$total = $(this.selectors.waitlistTotal);
 
+    if (!this.$waitlist) {
+      return;
+    }
+
     this.products.forEach((product) => {
       this.addWaitListItem(product);
     });

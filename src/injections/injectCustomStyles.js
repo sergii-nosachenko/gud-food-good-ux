@@ -41,6 +41,7 @@ function injectCustomStyles() {
       .waitlist-actions {
         display: flex;
         gap: 4px;
+        margin-top: -1px;
       }
 
       .quantity .plus,
