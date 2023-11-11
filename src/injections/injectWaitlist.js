@@ -60,6 +60,8 @@ class Waitlist {
     this.products.forEach((product) => {
       this.addWaitListItem(product);
     });
+
+    this.changeTotal();
   }
 
   addProduct(product) {
@@ -143,37 +145,44 @@ class Waitlist {
     });
 
     listItem.find('.to-cart').on('click', async () => {
-      let lastResult;
-
       for (let i = 0; i < product.quantity; i += 1) {
+        $.get(`/order/buy/pid/${product.pid}`, (resp) => {
+          if (resp.status === 'ok') {
+            $('#cart').html(resp.cart);
+            $('#weekinfo').html(resp.weekinfo);
+          }
+
+          if ('msg' in resp) {
+            const message = $('<div/>')
+              .addClass('alert')
+              .addClass('alert-danger')
+              .addClass('alert-dismissible')
+              .html(`
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+                ${resp.msg}
+              `);
+
+            $('#messages').html(message);
+          }
+        }, 'json');
+
         // eslint-disable-next-line no-await-in-loop
-        lastResult = await fetch(`/order/buy/pid/${product.pid}`, {
-          method: 'GET',
-          headers: {
-            accept: 'application/json, text/javascript, */*; q=0.01',
-          },
+        await new Promise((resolve) => {
+          setTimeout(resolve, 100);
         });
       }
 
-      if (lastResult.status === 'ok') {
-        const weekinfo = $('#weekinfo');
-
-        weekinfo.prepend(lastResult.weekinfo);
-        weekinfo.remove();
-
-        const cart = $('#cart');
-
-        cart.empty();
-        cart.append(lastResult.cart);
-
-        this.removeProduct(product.pid);
-        listItem.remove();
-      }
+      this.removeProduct(product.pid);
+      listItem.remove();
     });
   }
 
   changeTotal() {
-    this.$total.text(this.getTotal());
+    const total = this.getTotal();
+
+    this.$total.text(total);
   }
 }
 
