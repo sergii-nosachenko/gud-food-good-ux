@@ -1,7 +1,9 @@
-function injectStickySidebar() {
-  const sidebar = $('#weekinfo').parent();
+const Page = require('../classes/Page');
 
-  sidebar.toggleClass('stickySidebar');
+function injectStickySidebar() {
+  const page = new Page();
+
+  page.$sidebar.toggleClass('stickySidebar');
 }
 
 module.exports = injectStickySidebar;

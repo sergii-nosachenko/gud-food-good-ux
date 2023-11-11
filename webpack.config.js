@@ -1,12 +1,10 @@
 const path = require('path');
 const TerserPlugin = require('terser-webpack-plugin');
 
-const VERSION = 1;
-
 module.exports = {
   entry: './src/index.js',
   output: {
-    filename: `bundle.v${VERSION}.js`,
+    filename: 'bundle.js',
     path: path.resolve(__dirname, 'dist'),
   },
   module: {

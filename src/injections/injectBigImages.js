@@ -1,5 +1,7 @@
+const Page = require('../classes/Page');
+
 function injectBigImages() {
-  const images = $('img.media-object');
+  const { images } = new Page();
 
   if (!images.length) {
     return;
@@ -10,6 +12,7 @@ function injectBigImages() {
     const src = image.attr('src').replace('crop-64-64-', '');
     const $linkWrapper = $('<a>')
       .attr('href', src)
+      .attr('title', 'Open bigger image in new tab')
       .attr('target', '_blank');
 
     image.css('width', '80px');

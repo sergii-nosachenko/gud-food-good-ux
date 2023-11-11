@@ -1,5 +1,9 @@
+const Page = require('../classes/Page');
+
 function sortRows(tabPane, by, order) {
-  const rows = tabPane.find('.product-row');
+  const page = new Page();
+
+  const rows = tabPane.find(page.selectors.products);
 
   rows.each(function (index) {
     const row = $(this);
@@ -31,8 +35,8 @@ function sortRows(tabPane, by, order) {
   switch (by) {
     case 'title':
       rowsSorted.sort((a, b) => {
-        const aTitle = $(a).find('.media-heading').text();
-        const bTitle = $(b).find('.media-heading').text();
+        const aTitle = $(a).find(page.selectors.productTitle).text();
+        const bTitle = $(b).find(page.selectors.productTitle).text();
 
         return aTitle.localeCompare(bTitle) * multiplier;
       });
@@ -41,8 +45,8 @@ function sortRows(tabPane, by, order) {
 
     case 'price':
       rowsSorted.sort((a, b) => {
-        const aPrice = parseInt($(a).find('.lead').text(), 10);
-        const bPrice = parseInt($(b).find('.lead').text(), 10);
+        const aPrice = parseInt($(a).find(page.selectors.productPrice).text(), 10);
+        const bPrice = parseInt($(b).find(page.selectors.productPrice).text(), 10);
 
         return (aPrice - bPrice) * multiplier;
       });
@@ -57,6 +61,8 @@ function sortRows(tabPane, by, order) {
 }
 
 function injectSorting() {
+  const page = new Page();
+
   const sortRowHtml = `
     <div class="col-md-120 sorting-block">
       <div class="row">
@@ -75,9 +81,7 @@ function injectSorting() {
     </div>
   `;
 
-  const tabPanes = $('.tab-pane');
-
-  tabPanes.each(function () {
+  page.$tabPanes.each(function () {
     const tabPane = $(this);
 
     tabPane.prepend(sortRowHtml);
