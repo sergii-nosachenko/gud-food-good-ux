@@ -11,7 +11,10 @@ function injectNavbarOrderLink() {
 
   const orderLink = $('<a>')
     .attr('href', '/order')
-    .text('Order food');
+    .html(`
+      <span class="glyphicon glyphicon-apple"></span>
+      Order food
+    `);
 
   const listItem = $('<li>')
     .append(orderLink);
