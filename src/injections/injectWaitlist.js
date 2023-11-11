@@ -141,14 +141,32 @@ class Waitlist {
     });
 
     listItem.find('.to-cart').on('click', async () => {
+      let lastResult;
+
       for (let i = 0; i < product.quantity; i += 1) {
         // eslint-disable-next-line no-await-in-loop
-        await fetch(`/order/buy/pid/${product.pid}`);
+        lastResult = await fetch(`/order/buy/pid/${product.pid}`, {
+          method: 'GET',
+          headers: {
+            accept: 'application/json, text/javascript, */*; q=0.01',
+          },
+        });
       }
 
-      this.removeProduct(product.pid);
+      if (lastResult.status === 'ok') {
+        const weekinfo = $('#weekinfo');
 
-      listItem.remove();
+        weekinfo.prepend(lastResult.weekinfo);
+        weekinfo.remove();
+
+        const cart = $('#cart');
+
+        cart.empty();
+        cart.append(lastResult.cart);
+
+        this.removeProduct(product.pid);
+        listItem.remove();
+      }
     });
   }
 }
