@@ -13,7 +13,7 @@ jobs:
       - name: Repository Dispatch
         uses: peter-evans/repository-dispatch@v1
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.PR_TOKEN }}
           repository: sergii-nosachenko/gud-food-good-ux
           event-type: pr-cleanup
           client-payload: '{"ref": "${{ github.event.pull_request.head.ref }}"}'
