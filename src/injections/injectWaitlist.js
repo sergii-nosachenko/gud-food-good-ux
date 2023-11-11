@@ -55,7 +55,7 @@ class Waitlist {
     || [];
 
     this.$waitlist = Waitlist.addWaitlistPanel();
-    this.$total = this.$waitlist.find('#waitlist-total');
+    this.$total = this.$waitlist?.find('#waitlist-total');
 
     this.products.forEach((product) => {
       this.addWaitListItem(product);
@@ -105,7 +105,7 @@ class Waitlist {
   }
 
   getTotal() {
-    return this.products.reduce((acc, item) => acc + item.price * item.quantity, 0);
+    return this.products.reduce((acc, item) => acc + item.price * item.quantity, 0) || 0;
   }
 
   store() {
@@ -182,7 +182,7 @@ class Waitlist {
   changeTotal() {
     const total = this.getTotal();
 
-    this.$total.text(total);
+    this.$total?.text(total);
   }
 }
 
