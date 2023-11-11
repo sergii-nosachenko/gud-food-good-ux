@@ -83,6 +83,8 @@ class Waitlist {
       this.addWaitListItem(waitlistedProduct);
     }
 
+    this.changeTotal();
+
     this.store();
   }
 
@@ -92,6 +94,8 @@ class Waitlist {
     this.products.splice(index, 1);
 
     this.store();
+
+    this.changeTotal();
   }
 
   getProducts() {
@@ -130,8 +134,6 @@ class Waitlist {
       </tr>
     `);
 
-    this.$total.text(this.getTotal());
-
     this.$waitlist.append(listItem);
 
     listItem.find('.remove').on('click', () => {
@@ -168,6 +170,10 @@ class Waitlist {
         listItem.remove();
       }
     });
+  }
+
+  changeTotal() {
+    this.$total.text(this.getTotal());
   }
 }
 
