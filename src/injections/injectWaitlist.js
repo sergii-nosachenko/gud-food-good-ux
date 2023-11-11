@@ -55,7 +55,7 @@ class Waitlist {
     || [];
 
     this.$waitlist = Waitlist.addWaitlistPanel();
-    this.$total = this.$waitlist?.find('#waitlist-total');
+    this.$total = $('#waitlist-total');
 
     this.products.forEach((product) => {
       this.addWaitListItem(product);
@@ -116,9 +116,13 @@ class Waitlist {
     const listItem = $(`
       <tr>
         <td>${product.title}</td>
-        <td class="quantity">${product.quantity}</td>
+        <td class="quantity">
+          <span class="glyphicon glyphicon-minus minus"></span>
+            ${product.quantity}
+          <span class="glyphicon glyphicon-plus plus"></span>
+        </td>
         <td>${product.price}</td>
-        <td>
+        <td class="waitlist-actions">
           <button class="btn btn-danger btn-xs remove">
             <span 
               class="glyphicon glyphicon-trash"
@@ -137,6 +141,34 @@ class Waitlist {
     `);
 
     this.$waitlist.append(listItem);
+
+    listItem.find('.minus').on('click', () => {
+      const currentProduct = this.products.find((item) => item.pid === product.pid);
+
+      if (currentProduct.quantity > 1) {
+        currentProduct.quantity -= 1;
+
+        listItem.find('.quantity').text(currentProduct.quantity);
+      } else {
+        this.removeProduct(product.pid);
+
+        listItem.remove();
+      }
+
+      this.changeTotal();
+    });
+
+    listItem.find('.plus').on('click', () => {
+      const currentProduct = this.products.find((item) => item.pid === product.pid);
+
+      currentProduct.quantity += 1;
+
+      listItem.find('.quantity').text(currentProduct.quantity);
+
+      this.changeTotal();
+
+      this.store();
+    });
 
     listItem.find('.remove').on('click', () => {
       this.removeProduct(product.pid);
@@ -182,10 +214,7 @@ class Waitlist {
   changeTotal() {
     const total = this.getTotal();
 
-    console.log('changeTotal', total);
-    console.log(this.$total);
-
-    this.$total?.text(total);
+    this.$total.text(total);
   }
 }
 

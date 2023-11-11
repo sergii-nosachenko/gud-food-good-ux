@@ -35,6 +35,11 @@ function injectCustomStyles() {
         position: sticky;
         top: 70px;
       }
+
+      .waitlist-actions {
+        display: flex;
+        gap: 4px;
+      }
     </style>
   `;
 
