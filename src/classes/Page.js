@@ -11,6 +11,7 @@ class Page {
       weekInfo: '#weekinfo',
       cart: '#cart',
       messages: '#messages',
+      navBarRight: '.navbar-right',
     };
   }
 
@@ -40,6 +41,10 @@ class Page {
 
   get $messages() {
     return $(this.selectors.messages);
+  }
+
+  get $navBarRight() {
+    return $(this.selectors.navBarRight);
   }
 }
 
