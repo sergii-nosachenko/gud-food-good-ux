@@ -34,6 +34,8 @@ function injectCustomStyles() {
       .stickySidebar {
         position: sticky;
         top: 70px;
+        max-height: calc(100vh - 100px);
+        overflow-y: auto;
       }
 
       .waitlist-actions {
