@@ -1,12 +1,88 @@
+const Page = require('./Page');
+
 class Waitlist {
-  static addWaitlistPanel() {
-    const sidebar = $('#weekinfo').parent();
+  constructor() {
+    this.page = new Page();
+
+    this.selectors = {
+      waitlist: '#waitlist',
+      waitlistTotal: '#waitlist-total',
+      quantityValue: '.quantity .value',
+      minus: '.quantity .minus',
+      plus: '.quantity .plus',
+      remove: '.remove',
+      toCart: '.to-cart',
+    };
+
+    this.products = JSON.parse(localStorage.getItem('waitlistedProducts'))
+    || [];
+
+    this.$waitlist = Waitlist.addWaitlistPanel();
+    this.$total = $(this.selectors.waitlistTotal);
+
+    this.products.forEach((product) => {
+      this.addWaitListItem(product);
+    });
+
+    this.changeTotal();
+  }
+
+  addProduct(product) {
+    const existingProduct = this.products.find((item) => item.pid === product.pid);
+
+    if (existingProduct) {
+      existingProduct.quantity += 1;
+
+      const listItem = this.$waitlist
+        .find(`tr:nth-child(${this.products.indexOf(existingProduct) + 1})`);
+
+      listItem.find(this.selectors.quantityValue).text(existingProduct.quantity);
+    } else {
+      const waitlistedProduct = {
+        ...product,
+        quantity: 1,
+      };
+
+      this.products.push(waitlistedProduct);
+
+      this.addWaitListItem(waitlistedProduct);
+    }
+
+    this.changeTotal();
+
+    this.store();
+  }
+
+  removeProduct(pid) {
+    const index = this.products.findIndex((item) => item.pid === pid);
+
+    this.products.splice(index, 1);
+
+    this.store();
+
+    this.changeTotal();
+  }
+
+  getProducts() {
+    return this.products;
+  }
+
+  getTotal() {
+    return this.products.reduce((acc, item) => acc + item.price * item.quantity, 0) || 0;
+  }
+
+  store() {
+    localStorage.setItem('waitlistedProducts', JSON.stringify(this.products));
+  }
+
+  addWaitlistPanel() {
+    const sidebar = this.page.$sidebar;
 
     if (!sidebar.length) {
       return null;
     }
 
-    const existingWaitlist = sidebar.find('#waitlist');
+    const existingWaitlist = sidebar.find(this.selectors.waitlist);
 
     if (existingWaitlist.length) {
       return existingWaitlist;
@@ -47,69 +123,7 @@ class Waitlist {
 
     sidebar.append(panel);
 
-    return sidebar.find('#waitlist');
-  }
-
-  constructor() {
-    this.products = JSON.parse(localStorage.getItem('waitlistedProducts'))
-    || [];
-
-    this.$waitlist = Waitlist.addWaitlistPanel();
-    this.$total = $('#waitlist-total');
-
-    this.products.forEach((product) => {
-      this.addWaitListItem(product);
-    });
-
-    this.changeTotal();
-  }
-
-  addProduct(product) {
-    const existingProduct = this.products.find((item) => item.pid === product.pid);
-
-    if (existingProduct) {
-      existingProduct.quantity += 1;
-
-      const listItem = this.$waitlist
-        .find(`tr:nth-child(${this.products.indexOf(existingProduct) + 1})`);
-
-      listItem.find('.quantity .value').text(existingProduct.quantity);
-    } else {
-      const waitlistedProduct = {
-        ...product,
-        quantity: 1,
-      };
-
-      this.products.push(waitlistedProduct);
-
-      this.addWaitListItem(waitlistedProduct);
-    }
-
-    this.changeTotal();
-
-    this.store();
-  }
-
-  removeProduct(pid) {
-    const index = this.products.findIndex((item) => item.pid === pid);
-
-    this.products.splice(index, 1);
-
-    this.store();
-
-    this.changeTotal();
-  }
-
-  getProducts() {
-    return this.products;
-  }
-
-  getTotal() {
-    return this.products.reduce((acc, item) => acc + item.price * item.quantity, 0) || 0;
-  }
-
-  store() {
-    localStorage.setItem('waitlistedProducts', JSON.stringify(this.products));
+    return sidebar.find(this.selectors.waitlist);
   }
 
   addWaitListItem(product) {
@@ -142,13 +156,13 @@ class Waitlist {
 
     this.$waitlist.append(listItem);
 
-    listItem.find('.minus').on('click', () => {
+    listItem.find(this.selectors.minus).on('click', () => {
       const currentProduct = this.products.find((item) => item.pid === product.pid);
 
       if (currentProduct.quantity > 1) {
         currentProduct.quantity -= 1;
 
-        listItem.find('.quantity .value').text(currentProduct.quantity);
+        listItem.find(this.selectors.quantityValue).text(currentProduct.quantity);
       } else {
         this.removeProduct(product.pid);
 
@@ -158,30 +172,30 @@ class Waitlist {
       this.changeTotal();
     });
 
-    listItem.find('.plus').on('click', () => {
+    listItem.find(this.selectors.plus).on('click', () => {
       const currentProduct = this.products.find((item) => item.pid === product.pid);
 
       currentProduct.quantity += 1;
 
-      listItem.find('.quantity .value').text(currentProduct.quantity);
+      listItem.find(this.selectors.quantityValue).text(currentProduct.quantity);
 
       this.changeTotal();
 
       this.store();
     });
 
-    listItem.find('.remove').on('click', () => {
+    listItem.find(this.selectors.remove).on('click', () => {
       this.removeProduct(product.pid);
 
       listItem.remove();
     });
 
-    listItem.find('.to-cart').on('click', async () => {
+    listItem.find(this.selectors.toCart).on('click', async () => {
       for (let i = 0; i < product.quantity; i += 1) {
         $.get(`/order/buy/pid/${product.pid}`, (resp) => {
           if (resp.status === 'ok') {
-            $('#cart').html(resp.cart);
-            $('#weekinfo').html(resp.weekinfo);
+            this.page.$cart.html(resp.cart);
+            this.page.$weekInfo.html(resp.weekinfo);
           }
 
           if ('msg' in resp) {
@@ -196,7 +210,7 @@ class Waitlist {
                 ${resp.msg}
               `);
 
-            $('#messages').html(message);
+            this.page.$messages.html(message);
           }
         }, 'json');
 

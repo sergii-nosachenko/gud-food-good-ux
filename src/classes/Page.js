@@ -8,7 +8,9 @@ class Page {
       productPrice: '.lead',
       productBuyButton: '.buy',
       tabPane: '.tab-pane',
-      weekInfo: '.week-info',
+      weekInfo: '#weekinfo',
+      cart: '#cart',
+      messages: '#messages',
     };
   }
 
@@ -25,7 +27,19 @@ class Page {
   }
 
   get $sidebar() {
-    return $(this.selectors.weekInfo).parent();
+    return this.$weekInfo.parent();
+  }
+
+  get $weekInfo() {
+    return $(this.selectors.weekInfo);
+  }
+
+  get $cart() {
+    return $(this.selectors.cart);
+  }
+
+  get $messages() {
+    return $(this.selectors.messages);
   }
 }
 
