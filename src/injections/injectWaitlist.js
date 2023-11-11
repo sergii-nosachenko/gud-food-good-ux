@@ -1,8 +1,6 @@
 const Page = require('../classes/Page');
 const Waitlist = require('../classes/Waitlist');
 
-const WAIT_LIST = new Waitlist();
-
 function injectWaitlist() {
   const page = new Page();
 
@@ -11,6 +9,8 @@ function injectWaitlist() {
   if (!products.length) {
     return;
   }
+
+  const waitList = new Waitlist();
 
   products.each(function () {
     const product = $(this);
@@ -26,7 +26,7 @@ function injectWaitlist() {
       .attr('title', 'Add to waitlist')
       .css('margin-left', '5px')
       .on('click', () => {
-        WAIT_LIST.addProduct({
+        waitList.addProduct({
           pid: productId,
           title,
           price,
