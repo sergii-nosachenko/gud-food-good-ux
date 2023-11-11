@@ -1,7 +1,8 @@
 const Page = require('../classes/Page');
 
 function injectBigImages() {
-  const { images } = new Page();
+  const page = new Page();
+  const images = page.$images;
 
   if (!images.length) {
     return;
