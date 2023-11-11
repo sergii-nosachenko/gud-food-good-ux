@@ -36,29 +36,3 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
           destination_dir: ${{ env.BRANCH_NAME }}
-
-      - name: Clear PR Folder
-        if: github.event.action == 'closed'
-        run: |
-          # Set up Git.
-          git config --global user.email "action@github.com"
-          git config --global user.name "GitHub Action"
-
-          # Fetch all branches and tags. Necessary to operate on gh-pages.
-          git fetch --prune --unshallow
-          
-          # Check out the gh-pages branch.
-          git checkout gh-pages
-
-          # Remove the directory named after the branch and check if it exists.
-          BRANCH_DIR="${{ env.BRANCH_NAME }}"
-          if [ -d "$BRANCH_DIR" ]; then
-            git rm -rf "$BRANCH_DIR"
-            
-            # Commit and push the changes.
-            git commit -m "Remove deployed PR: $BRANCH_DIR"
-            git push origin gh-pages
-          else
-            echo "Directory $BRANCH_DIR does not exist on gh-pages."
-          fi
-
