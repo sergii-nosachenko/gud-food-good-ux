@@ -3,8 +3,8 @@ function injectCustomStyles() {
     <style type="text/css">
       @media (min-width: 1200px) {
         .container {
-            width: 90%;
-            max-width: 1400px;
+            width: 95%;
+            max-width: 1600px;
         }
       }
       
@@ -15,9 +15,11 @@ function injectCustomStyles() {
       .sorting-button {
         display: inline-block;
         font-weight: bold;
+        color: #777;
       }
       
       .sorting-button:hover {
+        color: #333;
         cursor: pointer;
       }
       
@@ -35,7 +37,7 @@ function injectCustomStyles() {
       }
     </style>
   `;
-  
+
   $('head').append(styles);
 }
 

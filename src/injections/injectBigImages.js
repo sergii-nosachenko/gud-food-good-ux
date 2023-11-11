@@ -12,8 +12,8 @@ function injectBigImages() {
       .attr('href', src)
       .attr('target', '_blank');
 
-    image.css('width', '128px');
-    image.css('height', '128px');
+    image.css('width', '80px');
+    image.css('height', '80px');
 
     image.before($linkWrapper);
     $linkWrapper.append(image);
