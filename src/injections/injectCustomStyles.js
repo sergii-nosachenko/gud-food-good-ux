@@ -40,6 +40,17 @@ function injectCustomStyles() {
         display: flex;
         gap: 4px;
       }
+
+      .quantity .plus,
+      .quantity .minus {
+        color: #777;
+        cursor: pointer;
+      }
+
+      .quantity .plus:hover,
+      .quantity .minus:hover {
+        color: #333;
+      }
     </style>
   `;
 
