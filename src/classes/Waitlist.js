@@ -151,7 +151,7 @@ class Waitlist {
           <button class="btn btn-success btn-xs to-cart">
             <span 
               class="glyphicon glyphicon-shopping-cart"
-              title="Add to cart"
+              title="Put into cart"
             ></span>
           </button>
         </td>
