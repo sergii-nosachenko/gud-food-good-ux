@@ -17,7 +17,7 @@ class Waitlist {
     this.products = JSON.parse(localStorage.getItem('waitlistedProducts'))
     || [];
 
-    this.$waitlist = Waitlist.addWaitlistPanel();
+    this.$waitlist = this.addWaitlistPanel();
     this.$total = $(this.selectors.waitlistTotal);
 
     this.products.forEach((product) => {
