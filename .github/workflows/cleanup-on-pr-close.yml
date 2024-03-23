@@ -20,10 +20,13 @@ jobs:
 
       - name: Cleanup PR Folder
         run: |
-          BRANCH_DIR=${{ github.event.client_payload.ref }}
+          BRANCH_DIR=fix-cleanup-workflow
           if [ -d "$BRANCH_DIR" ]; then
               git rm -rf "$BRANCH_DIR"
               git commit -m "Remove deployed PR: $BRANCH_DIR"
               git push
           else
               echo "Directory $BRANCH_DIR does not exist."
+          fi
+          exit 0
+        shell: /usr/bin/bash -e {0}
