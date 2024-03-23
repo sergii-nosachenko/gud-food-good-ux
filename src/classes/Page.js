@@ -1,3 +1,5 @@
+const $ = require('jquery');
+
 class Page {
   constructor() {
     this.selectors = {

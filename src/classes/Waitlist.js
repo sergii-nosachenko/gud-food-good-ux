@@ -1,3 +1,4 @@
+const $ = require('jquery');
 const Page = require('./Page');
 
 class Waitlist {

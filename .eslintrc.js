@@ -26,7 +26,4 @@ module.exports = {
     sourceType: 'module',
   },
   plugins: [],
-  globals: {
-    $: 'readonly',
-  },
 };
