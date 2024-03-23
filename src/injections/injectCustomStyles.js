@@ -11,7 +11,7 @@ function injectCustomStyles() {
       }
       
       .sorting-block,
-      .searching-block {
+      .search-block {
         margin-block: 20px 10px;
       }
       
