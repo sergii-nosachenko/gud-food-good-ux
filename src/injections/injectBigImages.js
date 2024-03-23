@@ -17,9 +17,6 @@ function injectBigImages() {
       .attr('title', 'Open bigger image in new tab')
       .attr('target', '_blank');
 
-    image.css('width', '80px');
-    image.css('height', '80px');
-
     image.before($linkWrapper);
     $linkWrapper.append(image);
   });
