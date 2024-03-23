@@ -10,7 +10,8 @@ function injectCustomStyles() {
         }
       }
       
-      .sorting-block {
+      .sorting-block,
+      .searching-block {
         margin-block: 20px 10px;
       }
       

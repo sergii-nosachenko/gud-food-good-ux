@@ -7,14 +7,14 @@ function injectSearchByTitle() {
   const sortRowHtml = `
     <div class="col-md-120 search-block">
       <div class="row">
-        <div class="col-md-2">
-          <p class="search-button title">
-            Search by title
+        <div class="col-md-12">
+          <label for="search-input">Search by title</label>
           </p>
-        </div>
-          
-        <div class="col-md-10">
-          <input type="text" class="search-input" />
+          <input 
+            type="text" 
+            class="form-control search-input"
+            placeholder="Type to search in titles of products"
+          />
       </div>
     </div>
   `;
@@ -24,16 +24,17 @@ function injectSearchByTitle() {
 
     tabPane.prepend(sortRowHtml);
 
-    tabPane.find('.search-button').on('click', function handleSearch() {
-      const button = $(this);
-      const input = button.closest('.search-block').find('.search-input');
+    tabPane.find('.search-input').on('change', function handleSearch() {
+      const input = $(this);
       const query = input.val().toLowerCase();
 
+      const products = tabPane.find(page.selectors.products);
+
       if (!query) {
+        products.show();
+
         return;
       }
-
-      const products = tabPane.find(page.selectors.products);
 
       products.each(function filterProducts() {
         const product = $(this);
