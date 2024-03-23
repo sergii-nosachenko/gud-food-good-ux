@@ -6,6 +6,7 @@ const injectSorting = require('./injections/injectSorting');
 const injectStickySidebar = require('./injections/injectStickySidebar');
 const injectAddToShortlist = require('./injections/injectWaitlist');
 const injectNavbarOrderLink = require('./injections/injectNavbarOrderLink');
+const injectSearchByTitle = require('./injections/injectSearchByTitle');
 
 $(document).ready(() => {
   injectCustomStyles();
@@ -14,4 +15,5 @@ $(document).ready(() => {
   injectSorting();
   injectStickySidebar();
   injectAddToShortlist();
+  injectSearchByTitle();
 });
