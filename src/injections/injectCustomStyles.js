@@ -1,3 +1,5 @@
+const $ = require('jquery');
+
 function injectCustomStyles() {
   const styles = `
     <style type="text/css">

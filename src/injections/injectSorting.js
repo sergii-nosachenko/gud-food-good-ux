@@ -1,3 +1,4 @@
+const $ = require('jquery');
 const Page = require('../classes/Page');
 
 function sortRows(tabPane, by, order) {
@@ -5,7 +6,7 @@ function sortRows(tabPane, by, order) {
 
   const rows = tabPane.find(page.selectors.products);
 
-  rows.each(function (index) {
+  rows.each(function addIndex(index) {
     const row = $(this);
 
     if (row.data('index')) {
@@ -81,12 +82,12 @@ function injectSorting() {
     </div>
   `;
 
-  page.$tabPanes.each(function () {
+  page.$tabPanes.each(function addSorting() {
     const tabPane = $(this);
 
     tabPane.prepend(sortRowHtml);
 
-    tabPane.find('.sorting-button').on('click', function () {
+    tabPane.find('.sorting-button').on('click', function handleSort() {
       const button = $(this);
       const by = button.hasClass('title')
         ? 'title'

@@ -1,3 +1,4 @@
+const $ = require('jquery');
 const Page = require('../classes/Page');
 const Waitlist = require('../classes/Waitlist');
 
@@ -12,7 +13,7 @@ function injectWaitlist() {
 
   const waitList = new Waitlist();
 
-  products.each(function () {
+  products.each(function addButton() {
     const product = $(this);
     const title = product.find(page.selectors.productTitle).text();
     const price = parseInt(product.find(page.selectors.productPrice).text(), 10);

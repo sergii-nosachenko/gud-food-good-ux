@@ -1,3 +1,4 @@
+const $ = require('jquery');
 const Page = require('../classes/Page');
 
 function injectBigImages() {
@@ -8,7 +9,7 @@ function injectBigImages() {
     return;
   }
 
-  images.each(function () {
+  images.each(function addLink() {
     const image = $(this);
     const src = image.attr('src').replace('crop-64-64-', '');
     const $linkWrapper = $('<a>')
